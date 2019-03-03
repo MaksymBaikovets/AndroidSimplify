@@ -1,6 +1,7 @@
 from os import system
 import time
 import subprocess
+import platform
 
 program_owner = "* This program was written by Maksym Baikovets."
 disclimer = "* All you done here are under your responsibility."
@@ -61,6 +62,7 @@ def operation_select(argument):
 def main_loop():
     while True:
         try:
+            print("Targeted OS:", platform.system())
             print("Please, choose the command to execute (number): ")
             print("0 - exit program")
             print("1 - check connected devices")
