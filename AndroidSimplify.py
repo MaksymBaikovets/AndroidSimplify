@@ -69,6 +69,7 @@ def main_loop():
             print("2 - reboot to bootloader")
             print("3 - reboot to recovery")
             print("4 - soft reboot device")
+            print("Type the command, please:", end = " ")
             user_input = int(input())
 
             output = operation_select(user_input)
