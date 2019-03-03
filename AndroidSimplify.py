@@ -1,10 +1,6 @@
 from os import system
 import time
-#import subprocess
-
-#subprocess.run("ll", capture_output = True)
-#cmd = subprocess.run(["C:\\src\\platform-tools\\adb", "devices"], capture_output = False)
-#print(cmd)
+import subprocess
 
 program_owner = "* This program was written by Maksym Baikovets."
 disclimer = "* All you done here are under your responsibility."
@@ -31,16 +27,29 @@ def exit():
     print(input("See you next time! Bye... (Press any key to close the window)"))
     raise SystemExit
 
-def zero():
-    return "zero"
+def adb_devices():
+    cmd = subprocess.run(["C:\\src\\platform-tools\\adb", "devices"], capture_output = False)
+    return cmd
  
-def one():
-    return "one"
+def reboot_bootloader():
+    cmd = subprocess.run(["C:\\src\\platform-tools\\adb", "reboot", "bootloader"], capture_output = False)
+    return cmd
+
+def reboot_recovery():
+    cmd = subprocess.run(["C:\\src\\platform-tools\\adb", "reboot", "recovery"], capture_output = False)
+    return cmd
+
+def soft_reboot():
+    cmd = subprocess.run(["C:\\src\\platform-tools\\adb", "reboot"], capture_output = False)
+    return cmd
 
 switcher = {
         0: exit,
-        1: zero,
-        2: one
+        1: adb_devices,
+        2: reboot_bootloader,
+        3: reboot_recovery,
+        4: soft_reboot
+
     }
 
 def operation_select(argument):
@@ -52,7 +61,14 @@ def operation_select(argument):
 def main_loop():
     while True:
         try:
-            user_input = int(input("Please, choose the command to execute (number): "))
+            print("Please, choose the command to execute (number): ")
+            print("0 - exit program")
+            print("1 - check connected devices")
+            print("2 - reboot to bootloader")
+            print("3 - reboot to recovery")
+            print("4 - soft reboot device")
+            user_input = int(input())
+
             output = operation_select(user_input)
             print(output, " ", "(Press enter to continue)")
             input()
