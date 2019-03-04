@@ -77,12 +77,47 @@ def operation_select_1block(argument):
 
 # -------------------- 2nd block of cmds --------------------
 
+def fw_version():
+    pass
+
+def flash_recovery():
+    print("To perform this action you should be in the bootloader!")
+    input()
+    #print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    # subprocess.run([".\\platform-tools-windows\\fastboot", "flash", \
+    #    "recovery", ".\\files\\twrp\\TWRP-Clover-05-01-19.img"], capture_output = False)
+
+    # subprocess.run([".\\platform-tools-windows\\fastboot", "erase", "cache"], \
+    #     capture_output = True)
+    # subprocess.run([".\\platform-tools-windows\\fastboot", "reboot"], \
+    #     capture_output = True)
+
+    # return cmd
+    pass
+
+def flash_firmware():
+    print("To perform this action you should be in the recovery!")
+    input()
+    #print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    # subprocess.run([".\\platform-tools-windows\\adb", "push", \
+    #   ".\\files\\fw\\fw_clover_China_Dev_9.2.28_8.1.zip", \
+    #   "/tmp"], capture_output = True)
+
+    # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+    #   "/sbin/recovery", "--update_package=/tmp/supersu.zip"], \
+    #   capture_output = True)
+
+    pass  
+
+def flash_persist():
+    pass 
+
 cmd_switcher_2block = {
     # 0: go_back,
-    1: adb_devices,
-    2: reboot_bootloader,
-    3: reboot_recovery,
-    4: soft_reboot
+    1: fw_version,
+    2: flash_recovery,
+    3: flash_firmware,
+    4: flash_persist
 }
 
 def operation_select_2block(argument):
@@ -92,12 +127,28 @@ def operation_select_2block(argument):
 
 # -------------------- 3rd block of cmds --------------------
 
+def wipe_cache():
+    pass
+
+def wipe_system():
+    pass  
+
+def flash_system():
+    pass  
+
+def restore_system():
+    pass 
+
+def flash_gapps():
+    pass 
+
 cmd_switcher_3block = {
     # 0: go_back,
-    1: adb_devices,
-    2: reboot_bootloader,
-    3: reboot_recovery,
-    4: soft_reboot
+    1: wipe_cache,
+    2: wipe_system,
+    3: flash_system,
+    4: restore_system,
+    5: flash_gapps
 }
 
 def operation_select_3block(argument):
@@ -107,13 +158,29 @@ def operation_select_3block(argument):
 
 # -------------------- 4th block of cmds --------------------
 
+            # print("1 - Install Magisk")
+            # print("2 - Install Pixel Launcher")
+            # print("3 - Install Google Camera")
+            # print("4 - Flash Bootanimation from Pixel")
+
+def magisk_install():
+    pass
+
+def launcher_install():
+    pass  
+
+def gcam_install():
+    pass  
+
+def bootanimation_install():
+    pass 
 
 cmd_switcher_4block = {
     # 0: go_back,
-    1: adb_devices,
-    2: reboot_bootloader,
-    3: reboot_recovery,
-    4: soft_reboot
+    1: magisk_install,
+    2: launcher_install,
+    3: gcam_install,
+    4: bootanimation_install
 }
 
 def operation_select_4block(argument):
@@ -170,6 +237,9 @@ def recovery_firmware():
 
             print("Type the command, please:", end = " ")
             user_input = int(input())
+
+            if user_input == 0:
+                break
             
             output = operation_select_2block(user_input)          
             print(output, " ", "(Press enter to continue)")
@@ -187,13 +257,67 @@ def recovery_firmware():
 
 @decore
 def flashing_rom():
-    pass
+    while True:
+        try:
+            print("Please, choose the command to execute (number): ")
+            print("1 - Wipe Dalvik & Cache")
+            print("2 - Wipe current System")
+            print("3 - Flash new ROM")
+            print("4 - Restore ROM from the backup")
+            print("5 - Flash GAPPs")
+            print("0 - Go back to categories")
+            print("".join("-" for i in range(80)))
+
+            print("Type the command, please:", end = " ")
+            user_input = int(input())
+
+            if user_input == 0:
+                break
+            
+            output = operation_select_3block(user_input)          
+            print(output, " ", "(Press enter to continue)")
+            input()
+                
+        except ValueError:
+            print("Not integer received! Please, try again!")
+            time.sleep(2)
+        except TypeError:
+            print("Out of available options! Please, try again!")
+            time.sleep(2)
+        break
 
 # -------------------- 4th block runner --------------------
 
 @decore
 def modifications_install():
-    pass
+    while True:
+        try:
+            print("Please, choose the command to execute (number): ")
+            print("1 - Install Magisk")
+            print("2 - Install Pixel Launcher")
+            print("3 - Install Google Camera")
+            print("4 - Flash Bootanimation from Pixel")
+            # print("5 - Install Titanium Backup")
+            print("0 - Go back to categories")
+            print("".join("-" for i in range(80)))
+
+            print("Type the command, please:", end = " ")
+            user_input = int(input())
+
+            if user_input == 0:
+                break
+            
+            output = operation_select_3block(user_input)          
+            print(output, " ", "(Press enter to continue)")
+            input()
+                
+        except ValueError:
+            print("Not integer received! Please, try again!")
+            time.sleep(2)
+        except TypeError:
+            print("Out of available options! Please, try again!")
+            time.sleep(2)
+        break
 
 # -------------------- select category --------------------
 
