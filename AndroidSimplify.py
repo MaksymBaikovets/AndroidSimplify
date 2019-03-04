@@ -1,16 +1,17 @@
-from os import system
-from os import getcwd
+#import platform
 import time
 import subprocess
-#import platform
+import sys
+import msvcrt
 
+from os import system
+from os import getcwd
 
 # -------------------- predefined program title --------------------
 
 program_owner = "* This program was written by Maksym Baikovets."
 disclimer = "* All you done here are under your responsibility."
 final_words = "* So, don't blame me if something went wrong. Thanks for using!"
-
 
 # -------------------- clear the screen --------------------
 
@@ -24,9 +25,12 @@ def decore(func):
         try:
             clear()
             print("".join("-" for i in range(80)))
-            print(program_owner, "".join("-" for i in range(79-len(program_owner))))
-            print(disclimer, "".join("-" for i in range(79-len(disclimer))))
-            print(final_words, "".join("-" for i in range(79-len(final_words))))
+            print(program_owner, "".join \
+                ("-" for i in range(79-len(program_owner))))
+            print(disclimer, "".join \
+                ("-" for i in range(79-len(disclimer))))
+            print(final_words, "".join \
+                ("-" for i in range(79-len(final_words))))
             print("".join("-" for i in range(80)))
             func()
         except Exception:
@@ -41,26 +45,29 @@ def decore(func):
 # -------------------- quit the main loop --------------------
 
 def exit_program():
-    print(input("See you next time! Bye... (Press any key to close the window)"))
+    print(input("See you next time! Bye... (Press any key to exit)"))
     raise SystemExit
 
 # -------------------- 1st block of cmds --------------------
 
 def adb_devices():
-    # https://stackoverflow.com/questions/22092118/get-device-information-such-as-product-model-from-adb-command
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices",  "-l"], capture_output = False)
+    cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices", \
+        "-l"], capture_output = False)
     return cmd
  
 def reboot_bootloader():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", "bootloader"], capture_output = False)
+    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+        "bootloader"], capture_output = False)
     return cmd
 
 def reboot_recovery():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", "recovery"], capture_output = False)
+    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+        "recovery"], capture_output = False)
     return cmd
 
 def soft_reboot():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot"], capture_output = False)
+    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
+        capture_output = False)
     return cmd
 
 cmd_switcher_1block = {
@@ -82,36 +89,60 @@ def fw_version():
     pass
 
 def flash_recovery():
-    print("To perform this action you should be in the bootloader!")
-    input()
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    # user_choice = input()
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
     
-    #print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    # subprocess.run([".\\platform-tools-windows\\fastboot", "flash", \
-    #    "recovery", ".\\files\\twrp\\TWRP-Clover-05-01-19.img"], capture_output = False)
+    elif keycode == 13:  
+        
+        subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+            "bootloader"], capture_output = True)
+        
+        subprocess.run([".\\platform-tools-windows\\fastboot", "flash", \
+            "recovery", ".\\files\\twrp\\twrp_clover_nikk3d.img"], \
+            capture_output = True)
 
-    # subprocess.run([".\\platform-tools-windows\\fastboot", "erase", "cache"], \
-    #     capture_output = True)
-    # subprocess.run([".\\platform-tools-windows\\fastboot", "reboot"], \
-    #     capture_output = True)
+        subprocess.run([".\\platform-tools-windows\\fastboot", "reboot"], \
+            capture_output = True)
 
-    # return cmd
-    pass
+        return "OK!"
+
+    else:
+        print("Incorrect value!")
+        return "Going back..."    
+
 
 def flash_firmware():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    input()
+    # user_choice = input()
+    keycode = ord(msvcrt.getch())
 
-    subprocess.run([".\\platform-tools-windows\\adb", "push", \
-       # getcwd()+"\\files\\fw\\fw_clover_China_Dev_9.2.28_8.1.zip", \
-        getcwd()+"\\files\\test.txt", \
-       "/sdcard/tmp_folder"], capture_output = True)
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "mkdir /sdcard/temp"], capture_output = True)
 
-    # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-    #   "/sbin/recovery", "--update_package=/tmp/supersu.zip"], \
-    #   capture_output = True)
+        subprocess.run([".\\platform-tools-windows\\adb", "push", \
+            getcwd()+"\\files\\fw\\fw_clover_China_Dev_9.2.28_8.1.zip", \
+            "/sdcard/temp"], capture_output = True)
 
-    pass  
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "twrp install /sdcard/temp/fw_clover_China_Dev_9.2.28_8.1.zip"], \
+            capture_output = True)
+
+        return "OK!"
+        
+    else:
+        print("Incorrect value!")
+        return "Going back..."    
 
 def flash_persist():
     pass 
@@ -161,11 +192,6 @@ def operation_select_3block(argument):
     return func()
 
 # -------------------- 4th block of cmds --------------------
-
-            # print("1 - Install Magisk")
-            # print("2 - Install Pixel Launcher")
-            # print("3 - Install Google Camera")
-            # print("4 - Flash Bootanimation from Pixel")
 
 def magisk_install():
     pass
@@ -223,7 +249,7 @@ def basic_functions():
         except TypeError:
             print("Out of available options! Please, try again!")
             time.sleep(2)
-
+        break
     
 # -------------------- 2nd block runner --------------------
 
@@ -350,9 +376,11 @@ def main_loop():
 
             print("Please, choose the category of CMDs (number): ")
             print("1 - Basics (adb devices, rebooting)")
-            print("2 - Working with recovery & FW (fastboot, fw version, update recovery / fw)")
+            print("2 - Working with recovery & FW (fastboot, fw version,", \
+                "update recovery / fw)")
             print("3 - Flashing ROM to device (flash ROM and GAPPs if needed)")
-            print("4 - Install modifications (such as Magisk, launchers, icons, etc.)")
+            print("4 - Install modifications (such as Magisk, launchers,", \
+                "icons, etc.)")
             print("0 - Exit program")
             print("".join("-" for i in range(80)))
             
