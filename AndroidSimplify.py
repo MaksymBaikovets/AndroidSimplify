@@ -1,4 +1,5 @@
 from os import system
+from os import getcwd
 import time
 import subprocess
 #import platform
@@ -83,6 +84,7 @@ def fw_version():
 def flash_recovery():
     print("To perform this action you should be in the bootloader!")
     input()
+    
     #print("Press 'Enter' to continue or press 'Esc' to abort operation.")
     # subprocess.run([".\\platform-tools-windows\\fastboot", "flash", \
     #    "recovery", ".\\files\\twrp\\TWRP-Clover-05-01-19.img"], capture_output = False)
@@ -97,11 +99,13 @@ def flash_recovery():
 
 def flash_firmware():
     print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
     input()
-    #print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    # subprocess.run([".\\platform-tools-windows\\adb", "push", \
-    #   ".\\files\\fw\\fw_clover_China_Dev_9.2.28_8.1.zip", \
-    #   "/tmp"], capture_output = True)
+
+    subprocess.run([".\\platform-tools-windows\\adb", "push", \
+       # getcwd()+"\\files\\fw\\fw_clover_China_Dev_9.2.28_8.1.zip", \
+        getcwd()+"\\files\\test.txt", \
+       "/sdcard/tmp_folder"], capture_output = True)
 
     # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
     #   "/sbin/recovery", "--update_package=/tmp/supersu.zip"], \
