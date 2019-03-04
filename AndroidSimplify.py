@@ -3,12 +3,20 @@ import time
 import subprocess
 #import platform
 
+
+# -------------------- predefined program title --------------------
+
 program_owner = "* This program was written by Maksym Baikovets."
 disclimer = "* All you done here are under your responsibility."
 final_words = "* So, don't blame me if something went wrong. Thanks for using!"
 
+
+# -------------------- clear the screen --------------------
+
 def clear():
     system("cls")
+
+# -------------------- decorator (title and screen clear) --------------------
 
 def decore(func):
     def run():
@@ -24,14 +32,22 @@ def decore(func):
             pass
     return run
 
-def go_back():
-    print("You'll be turned back to main menu.")
-    return 
-    # print(input("See you next time! Bye... (Press any key to close the window)"))
-    # raise SystemExit
+# -------------------- return to categories --------------------
+
+# def go_back():
+#     return "You'll be turned back to main menu."
+
+# -------------------- quit the main loop --------------------
+
+def exit_program():
+    print(input("See you next time! Bye... (Press any key to close the window)"))
+    raise SystemExit
+
+# -------------------- 1st block of cmds --------------------
 
 def adb_devices():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices"], capture_output = False)
+    # https://stackoverflow.com/questions/22092118/get-device-information-such-as-product-model-from-adb-command
+    cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices",  "-l"], capture_output = False)
     return cmd
  
 def reboot_bootloader():
@@ -46,22 +62,67 @@ def soft_reboot():
     cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot"], capture_output = False)
     return cmd
 
-cmd_switcher = {
-        0: go_back,
-        1: adb_devices,
-        2: reboot_bootloader,
-        3: reboot_recovery,
-        4: soft_reboot
-    }
+cmd_switcher_1block = {
+    # 0: go_back,
+    1: adb_devices,
+    2: reboot_bootloader,
+    3: reboot_recovery,
+    4: soft_reboot
+}
 
-def operation_select(argument):
+def operation_select_1block(argument):
     # Get the command from switcher dictionary
-    func = cmd_switcher.get(argument)
+    func = cmd_switcher_1block.get(argument)
     return func()
 
-def exit_program():
-    print(input("See you next time! Bye... (Press any key to close the window)"))
-    raise SystemExit
+# -------------------- 2nd block of cmds --------------------
+
+cmd_switcher_2block = {
+    # 0: go_back,
+    1: adb_devices,
+    2: reboot_bootloader,
+    3: reboot_recovery,
+    4: soft_reboot
+}
+
+def operation_select_2block(argument):
+    # Get the command from switcher dictionary
+    func = cmd_switcher_2block.get(argument)
+    return func()
+
+# -------------------- 3rd block of cmds --------------------
+
+cmd_switcher_3block = {
+    # 0: go_back,
+    1: adb_devices,
+    2: reboot_bootloader,
+    3: reboot_recovery,
+    4: soft_reboot
+}
+
+def operation_select_3block(argument):
+    # Get the command from switcher dictionary
+    func = cmd_switcher_3block.get(argument)
+    return func()
+
+# -------------------- 4th block of cmds --------------------
+
+
+cmd_switcher_4block = {
+    # 0: go_back,
+    1: adb_devices,
+    2: reboot_bootloader,
+    3: reboot_recovery,
+    4: soft_reboot
+}
+
+def operation_select_4block(argument):
+    # Get the command from switcher dictionary
+    func = cmd_switcher_4block.get(argument)
+    return func()
+
+# -------------------- cmds runners --------------------
+# -------------------- 1st block runner --------------------
 
 @decore
 def basic_functions():
@@ -77,8 +138,40 @@ def basic_functions():
 
             print("Type the command, please:", end = " ")
             user_input = int(input())
+
+            if user_input == 0:
+                break
+
+            output = operation_select_1block(user_input)          
+            print(output, " ", "(Press enter to continue)")
+            input()
+               
+        except ValueError:
+            print("Not integer received! Please, try again!")
+            time.sleep(2)
+        except TypeError:
+            print("Out of available options! Please, try again!")
+            time.sleep(2)
+
+    
+# -------------------- 2nd block runner --------------------
+
+@decore
+def recovery_firmware():
+    while True:
+        try:
+            print("Please, choose the command to execute (number): ")
+            print("1 - Show FW version")
+            print("2 - Flash recovery (TWRP)")
+            print("3 - Flash FW")
+            print("4 - Restore Persist")
+            print("0 - Go back to categories")
+            print("".join("-" for i in range(80)))
+
+            print("Type the command, please:", end = " ")
+            user_input = int(input())
             
-            output = operation_select(user_input)          
+            output = operation_select_2block(user_input)          
             print(output, " ", "(Press enter to continue)")
             input()
                
@@ -89,18 +182,20 @@ def basic_functions():
             print("Out of available options! Please, try again!")
             time.sleep(2)
         break
-    
-@decore
-def recovery_firmware():
-    pass
+
+# -------------------- 3rd block runner --------------------
 
 @decore
 def flashing_rom():
     pass
 
+# -------------------- 4th block runner --------------------
+
 @decore
 def modifications_install():
     pass
+
+# -------------------- select category --------------------
 
 category_switcher = {
     0: exit_program,
@@ -115,12 +210,16 @@ def category_select(argument):
     func = category_switcher.get(argument)
     return func()
 
+
+# -------------------- main loop of program --------------------
+
 @decore
 def main_loop():
     while True:
         try:
             # For the crossplatform support feature:
             # print("Targeted OS:", platform.system())
+
             print("Please, choose the category of CMDs (number): ")
             print("1 - Basics (adb devices, rebooting)")
             print("2 - Working with recovery & FW (fastboot, fw version, update recovery / fw)")
@@ -141,9 +240,12 @@ def main_loop():
             time.sleep(2)
         break
 
+# -------------------- launch main loop --------------------
+
 def main():
     while True:
         main_loop()
 
+# -------------------- program runner --------------------
 if __name__ == "__main__":
     main()
