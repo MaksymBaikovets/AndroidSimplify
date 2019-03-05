@@ -53,22 +53,22 @@ def exit_program():
 def adb_devices():
     cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices", \
         "-l"], capture_output = False)
-    return cmd
+    return "Completed!"
  
 def reboot_bootloader():
     cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
         "bootloader"], capture_output = False)
-    return cmd
+    return "Completed!"
 
 def reboot_recovery():
     cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
         "recovery"], capture_output = False)
-    return cmd
+    return "Completed!"
 
 def soft_reboot():
     cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
         capture_output = False)
-    return cmd
+    return "Completed!"
 
 cmd_switcher_1block = {
     # 0: go_back,
@@ -86,7 +86,9 @@ def operation_select_1block(argument):
 # -------------------- 2nd block of cmds --------------------
 
 def fw_version():
-    pass
+    cmd = subprocess.run(["./platform-tools-windows/adb", "shell", \
+        "getprop gsm.version.baseband"], capture_output = False)
+    return "Completed!"
 
 def flash_recovery():
     print("To perform this action you should be in the recovery!")
@@ -103,7 +105,7 @@ def flash_recovery():
             "bootloader"], capture_output = True)
         
         subprocess.run([".\\platform-tools-windows\\fastboot", "flash", \
-            "recovery", ".\\files\\twrp\\twrp_clover_nikk3d.img"], \
+            "recovery", ".\\files\\twrp\\twrp.img"], \
             capture_output = True)
 
         subprocess.run([".\\platform-tools-windows\\fastboot", "reboot"], \
@@ -131,11 +133,11 @@ def flash_firmware():
             "mkdir /sdcard/temp"], capture_output = True)
 
         subprocess.run([".\\platform-tools-windows\\adb", "push", \
-            getcwd()+"\\files\\fw\\fw_clover_China_Dev_9.2.28_8.1.zip", \
+            getcwd()+"\\files\\fw\\firmware.zip", \
             "/sdcard/temp"], capture_output = True)
 
         subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "twrp install /sdcard/temp/fw_clover_China_Dev_9.2.28_8.1.zip"], \
+            "twrp install /sdcard/temp/firmware.zip"], \
             capture_output = True)
 
         subprocess.run([".\\platform-tools-windows\\adb", "shell", \
@@ -155,7 +157,7 @@ cmd_switcher_2block = {
     1: fw_version,
     2: flash_recovery,
     3: flash_firmware,
-    4: flash_persist
+    # 4: flash_persist
 }
 
 def operation_select_2block(argument):
@@ -178,14 +180,80 @@ def restore_system():
     pass 
 
 def flash_gapps():
-    pass 
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "mkdir /sdcard/temp"], capture_output = True)
+        
+        try:
+            print("Choose the version of your ROM:")
+            print("1 - Android 8.x")
+            print("2 - Android 9.x")
+            print("0 - Cancel operation")
+            
+            user_input = int(input())
+            
+            if user_input == 0:
+                return "Going back..."
+
+            elif user_input == 1:
+
+                subprocess.run([".\\platform-tools-windows\\adb", "push", \
+                    getcwd()+"\\files\\gapps\\arm64-8.1.zip", \
+                    "/sdcard/temp"], capture_output = True)
+
+                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                    "twrp install /sdcard/temp/arm64-8.1.zip"], \
+                    capture_output = True)
+
+                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                    "rm -f /sdcard/temp"], capture_output = True)
+                
+                return "OK!"
+
+            elif user_input == 2:
+
+                subprocess.run([".\\platform-tools-windows\\adb", "push", \
+                    getcwd()+"\\files\\gapps\\arm64-9.0.zip", \
+                    "/sdcard/temp"], capture_output = True)
+
+                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                    "twrp install /sdcard/temp/arm64-9.0.zip"], \
+                    capture_output = True)
+                
+                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                    "rm -f /sdcard/temp"], capture_output = True)
+                
+                return "OK!"
+                         
+        except ValueError:
+            print("Not integer received!")
+            time.sleep(2)
+            return "Going back..."
+
+        except TypeError:
+            print("Out of available options!")
+            time.sleep(2)
+            return "Going back..."
+        
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 cmd_switcher_3block = {
     # 0: go_back,
-    1: wipe_cache,
-    2: wipe_system,
-    3: flash_system,
-    4: restore_system,
+    # 1: wipe_cache,
+    # 2: wipe_system,
+    # 3: flash_system,
+    # 4: restore_system,
     5: flash_gapps
 }
 
@@ -210,10 +278,10 @@ def bootanimation_install():
 
 cmd_switcher_4block = {
     # 0: go_back,
-    1: magisk_install,
-    2: launcher_install,
-    3: gcam_install,
-    4: bootanimation_install
+    # 1: magisk_install,
+    # 2: launcher_install,
+    # 3: gcam_install,
+    # 4: bootanimation_install
 }
 
 def operation_select_4block(argument):
@@ -264,7 +332,7 @@ def recovery_firmware():
             print("1 - Show FW version")
             print("2 - Flash recovery (TWRP)")
             print("3 - Flash FW")
-            print("4 - Restore Persist")
+            # print("4 - Restore Persist")
             print("0 - Go back to categories")
             print("".join("-" for i in range(80)))
 
@@ -293,10 +361,10 @@ def flashing_rom():
     while True:
         try:
             print("Please, choose the command to execute (number): ")
-            print("1 - Wipe Dalvik & Cache")
-            print("2 - Wipe current System")
-            print("3 - Flash new ROM")
-            print("4 - Restore ROM from the backup")
+            # print("1 - Wipe Dalvik & Cache")
+            # print("2 - Wipe current System")
+            # print("3 - Flash new ROM")
+            # print("4 - Restore ROM from the backup")
             print("5 - Flash GAPPs")
             print("0 - Go back to categories")
             print("".join("-" for i in range(80)))
@@ -326,10 +394,10 @@ def modifications_install():
     while True:
         try:
             print("Please, choose the command to execute (number): ")
-            print("1 - Install Magisk")
-            print("2 - Install Pixel Launcher")
-            print("3 - Install Google Camera")
-            print("4 - Flash Bootanimation from Pixel")
+            # print("1 - Install Magisk")
+            # print("2 - Install Pixel Launcher")
+            # print("3 - Install Google Camera")
+            # print("4 - Flash Bootanimation from Pixel")
             # print("5 - Install Titanium Backup")
             print("0 - Go back to categories")
             print("".join("-" for i in range(80)))
