@@ -52,22 +52,22 @@ def exit_program():
 # -------------------- 1st block of cmds --------------------
 
 def adb_devices():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices", \
+    subprocess.run([".\\platform-tools-windows\\adb", "devices", \
         "-l"], capture_output = False)
     return "Completed!"
  
 def reboot_bootloader():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+    subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
         "bootloader"], capture_output = False)
     return "Completed!"
 
 def reboot_recovery():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+    subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
         "recovery"], capture_output = False)
     return "Completed!"
 
 def soft_reboot():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
+    subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
         capture_output = False)
     return "Completed!"
 
@@ -87,7 +87,7 @@ def operation_select_1block(argument):
 # -------------------- 2nd block of cmds --------------------
 
 def fw_version():
-    cmd = subprocess.run(["./platform-tools-windows/adb", "shell", \
+    subprocess.run(["./platform-tools-windows/adb", "shell", \
         "getprop gsm.version.baseband"], capture_output = False)
     return "Completed!"
 
