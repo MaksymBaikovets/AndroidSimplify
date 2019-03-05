@@ -1,0 +1,5 @@
+# Ignoring pycache folder
+__pycache__/
+
+# Ignoring files folder (should be created by the script itself)
+files/
