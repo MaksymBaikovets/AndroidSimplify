@@ -333,7 +333,10 @@ def magisk_install():
     
     elif keycode == 13:  
 
-        url = "https://github.com/topjohnwu/Magisk/releases/download/v18.1/Magisk-v18.1.zip"
+        url = (
+            "https://github.com/topjohnwu/Magisk/releases"
+            "/download/v18.1/Magisk-v18.1.zip"""
+        )
 
         r = requests.get(url)
         file = requests.get(r.url)
