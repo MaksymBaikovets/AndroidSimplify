@@ -167,20 +167,77 @@ def operation_select_2block(argument):
     return func()
 
 # -------------------- 3rd block of cmds --------------------
+# https://www.pocketables.com/2014/10/using-twrps-new-adb-interface.html
 
 def wipe_cache():
-    pass
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "twrp wipe cache"], capture_output = True)
+
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "twrp wipe dalvik"], capture_output = True)
+
+        return "OK!"
+    
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 def wipe_system():
-    pass  
+
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        print("This operation wipes your current system. Are you sure: y/n (?)")
+
+        keycode = ord(msvcrt.getch())
+        if keycode == 110:
+            return "Cancelled..."
+
+        elif keycode == 121:  
+            
+            subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                "twrp wipe system"], capture_output = True)
+
+            return "OK!"
+        
+        else:
+            print("Incorrect value!")
+            return "Cancelled..." 
+
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 def flash_system():
     pass  
 
 def restore_system():
-    pass 
+    
+    # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+    #     r"ls -l /sdcard/TWRP/.BACKUPS/*/"], capture_output = False)
+
+    # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+    #     "twrp restore <foldername> <switches>"], capture_output = True)
+
+    pass
 
 def flash_gapps():
+
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
     
@@ -251,8 +308,8 @@ def flash_gapps():
 
 cmd_switcher_3block = {
     # 0: go_back,
-    # 1: wipe_cache,
-    # 2: wipe_system,
+    1: wipe_cache,
+    2: wipe_system,
     # 3: flash_system,
     # 4: restore_system,
     5: flash_gapps
@@ -398,8 +455,8 @@ def flashing_rom():
     while True:
         try:
             print("Please, choose the command to execute (number): ")
-            # print("1 - Wipe Dalvik & Cache")
-            # print("2 - Wipe current System")
+            print("1 - Wipe Dalvik & Cache")
+            print("2 - Wipe System")
             # print("3 - Flash new ROM")
             # print("4 - Restore ROM from the backup")
             print("5 - Flash GAPPs")
