@@ -138,6 +138,9 @@ def flash_firmware():
             "twrp install /sdcard/temp/fw_clover_China_Dev_9.2.28_8.1.zip"], \
             capture_output = True)
 
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "rm -f /sdcard/temp"], capture_output = True)
+
         return "OK!"
         
     else:
