@@ -3,6 +3,7 @@ import time
 import subprocess
 import sys
 import msvcrt
+import requests
 
 from os import system
 from os import getcwd
@@ -265,8 +266,44 @@ def operation_select_3block(argument):
 # -------------------- 4th block of cmds --------------------
 
 def magisk_install():
-    pass
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    
+    keycode = ord(msvcrt.getch())
 
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+
+        url = "https://github.com/topjohnwu/Magisk/releases/download/v18.1/Magisk-v18.1.zip"
+
+        r = requests.get(url)
+        file = requests.get(r.url)
+
+        with open('./files/addons/magisk.zip', 'wb') as f:  
+            f.write(file.content)
+
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "mkdir /sdcard/temp"], capture_output = True)
+
+        subprocess.run([".\\platform-tools-windows\\adb", "push", \
+            getcwd()+"\\files\\addons\\magisk.zip", \
+            "/sdcard/temp"], capture_output = True)
+
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "twrp install /sdcard/temp/magisk.zip"], \
+            capture_output = True)
+
+        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            "rm -f /sdcard/temp"], capture_output = True)
+
+        return "OK!"
+
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
+    
 def launcher_install():
     pass  
 
@@ -278,7 +315,7 @@ def bootanimation_install():
 
 cmd_switcher_4block = {
     # 0: go_back,
-    # 1: magisk_install,
+    1: magisk_install
     # 2: launcher_install,
     # 3: gcam_install,
     # 4: bootanimation_install
@@ -394,7 +431,7 @@ def modifications_install():
     while True:
         try:
             print("Please, choose the command to execute (number): ")
-            # print("1 - Install Magisk")
+            print("1 - Install Magisk")
             # print("2 - Install Pixel Launcher")
             # print("3 - Install Google Camera")
             # print("4 - Flash Bootanimation from Pixel")
@@ -407,10 +444,10 @@ def modifications_install():
 
             if user_input == 0:
                 break
-            
-            output = operation_select_3block(user_input)          
-            print(output, " ", "(Press enter to continue)")
-            input()
+            else:
+                output = operation_select_4block(user_input)          
+                print(output, " ", "(Press enter to continue)")
+                input()
                 
         except ValueError:
             print("Not integer received! Please, try again!")
