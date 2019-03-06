@@ -52,22 +52,22 @@ def exit_program():
 # -------------------- 1st block of cmds --------------------
 
 def adb_devices():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "devices", \
+    subprocess.run([".\\platform-tools-windows\\adb", "devices", \
         "-l"], capture_output = False)
     return "Completed!"
  
 def reboot_bootloader():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+    subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
         "bootloader"], capture_output = False)
     return "Completed!"
 
 def reboot_recovery():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
+    subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
         "recovery"], capture_output = False)
     return "Completed!"
 
 def soft_reboot():
-    cmd = subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
+    subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
         capture_output = False)
     return "Completed!"
 
@@ -87,7 +87,7 @@ def operation_select_1block(argument):
 # -------------------- 2nd block of cmds --------------------
 
 def fw_version():
-    cmd = subprocess.run(["./platform-tools-windows/adb", "shell", \
+    subprocess.run(["./platform-tools-windows/adb", "shell", \
         "getprop gsm.version.baseband"], capture_output = False)
     return "Completed!"
 
@@ -224,7 +224,49 @@ def wipe_system():
         return "Going back..." 
 
 def flash_system():
-    pass  
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        
+        print (
+            "This operation install/upgrade your current system. " 
+            "Are you sure: y/n (?)"
+        )
+
+        keycode = ord(msvcrt.getch())
+        if keycode == 110:
+            return "Cancelled..."
+
+        elif keycode == 121:  
+            subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                "mkdir /sdcard/temp"], capture_output = True)
+
+            # subprocess.run([".\\platform-tools-windows\\adb", "push", \
+            #     getcwd()+"\\files\\fw\\firmware.zip", \
+            #     "/sdcard/temp"], capture_output = True)
+
+            # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            #     "twrp install /sdcard/temp/firmware.zip"], \
+            #     capture_output = True)
+
+            subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+                "rm -f /sdcard/temp"], capture_output = True)
+
+            return "OK!"
+        
+        else:
+            print("Incorrect value!")
+            return "Going back..." 
+    
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 def restore_system():
     
