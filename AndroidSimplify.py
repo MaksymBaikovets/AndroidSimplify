@@ -442,7 +442,55 @@ def magisk_install():
         return "Going back..." 
     
 def launcher_install():
-    pass  
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        
+        # Need to add dynamic load of archives
+        
+        # url = (
+        #     "https://github.com/topjohnwu/Magisk/releases"
+        #     "/download/v18.1/Magisk-v18.1.zip"""
+        # )
+
+        # r = requests.get(url)
+        # file = requests.get(r.url)
+
+        # with open('./files/addons/magisk.zip', 'wb') as f:  
+        #     f.write(file.content)
+
+        subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "push", getcwd() 
+            + "\\files\\addons\\launcher.zip", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "push", getcwd() 
+            + "\\files\\addons\\matchmaker.zip", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "twrp", "install",
+            "/sdcard/temp/matchmaker.zip"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "twrp", "install",
+            "/sdcard/temp/launcher.zip"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+            capture_output = True)
+
+        return "OK!"
+
+    else:
+        print("Incorrect value!")
+        return "Going back..."   
 
 def gcam_install():
     pass  
@@ -452,8 +500,8 @@ def bootanimation_install():
 
 cmd_switcher_4block = {
     # 0: go_back,
-    1: magisk_install
-    # 2: launcher_install,
+    1: magisk_install,
+    2: launcher_install
     # 3: gcam_install,
     # 4: bootanimation_install
 }
@@ -569,7 +617,7 @@ def modifications_install():
         try:
             print("Please, choose the command to execute (number): ")
             print("1 - Install Magisk")
-            # print("2 - Install Pixel Launcher")
+            print("2 - Install Pixel Launcher")
             # print("3 - Install Google Camera")
             # print("4 - Flash Bootanimation from Pixel")
             # print("5 - Install Titanium Backup")
