@@ -55,19 +55,23 @@ def exit_program():
 # -------------------- 1st block of cmds --------------------
 
 def adb_devices():
-    subprocess.run([adb_path, "devices", "-l"], capture_output = False)
+    subprocess.run([adb_path, "devices", "-l"], 
+        capture_output = False)
     return "Completed!"
  
 def reboot_bootloader():
-    subprocess.run([adb_path, "reboot bootloader"], capture_output = False)
+    subprocess.run([adb_path, "reboot bootloader"], 
+        capture_output = False)
     return "Completed!"
 
 def reboot_recovery():
-    subprocess.run([adb_path, "reboot recovery"], capture_output = False)
+    subprocess.run([adb_path, "reboot recovery"], 
+        capture_output = False)
     return "Completed!"
 
 def soft_reboot():
-    subprocess.run([adb_path, "reboot"], capture_output = False)
+    subprocess.run([adb_path, "reboot"], 
+        capture_output = False)
     return "Completed!"
 
 cmd_switcher_1block = {
@@ -86,8 +90,8 @@ def operation_select_1block(argument):
 # -------------------- 2nd block of cmds --------------------
 
 def fw_version():
-    subprocess.run([adb_path, "shell", 
-        "getprop gsm.version.baseband"], capture_output = False)
+    subprocess.run([adb_path, "shell", "getprop gsm.version.baseband"], 
+        capture_output = False)
     return "Completed!"
 
 def flash_recovery():
@@ -101,12 +105,15 @@ def flash_recovery():
     
     elif keycode == 13:  
         
-        subprocess.run([adb_path, "reboot bootloader"], capture_output = True)
+        subprocess.run([adb_path, "reboot bootloader"], 
+            capture_output = True)
         
         subprocess.run([fastboot_path, "flash", "recovery", 
-            ".\\files\\twrp\\twrp.img"], capture_output = True)
+            ".\\files\\twrp\\twrp.img"], 
+            capture_output = True)
 
-        subprocess.run([fastboot_path, "reboot"], capture_output = True)
+        subprocess.run([fastboot_path, "reboot"], 
+            capture_output = True)
 
         return "OK!"
 
