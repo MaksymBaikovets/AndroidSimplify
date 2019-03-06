@@ -502,12 +502,14 @@ def gcam_install():
     
     elif keycode == 13:  
         
-        # adb remount
+        # adb shell su
+        # mount -o rw,remount /system
         # adb push ADWLauncher.apk /system/app
         # adb shell chmod 644 /system/app/ADWLauncher.apk
+        # mount -o ro,remount /system
 
         subprocess.run([adb_path, "push", getcwd() 
-            + "\\files\\addons\\camera.apk", "/system/app"], 
+            + "\\files\\addons\\camera.apk", "/system/app/"], 
             capture_output = True)
         
         subprocess.run([adb_path, "shell", "chmod", "644",
@@ -530,12 +532,14 @@ def titanium_install():
     
     elif keycode == 13:  
         
-        # adb remount
+        # adb shell su
+        # mount -o rw,remount /system
         # adb push ADWLauncher.apk /system/app
         # adb shell chmod 644 /system/app/ADWLauncher.apk
+        # mount -o ro,remount /system
 
         subprocess.run([adb_path, "push", getcwd() 
-            + "\\files\\addons\\titanium.apk", "/system/app"], 
+            + "\\files\\addons\\titanium.apk", "/system/app/"], 
             capture_output = True)
         
         subprocess.run([adb_path, "shell", "chmod", "644",
@@ -595,8 +599,8 @@ cmd_switcher_4block = {
     # 0: go_back,
     1: magisk_install,
     2: launcher_install,
-    3: gcam_install,
-    4: titanium_install,
+    # 3: gcam_install,
+    # 4: titanium_install,
     5: bootanimation_install
 }
 
@@ -712,8 +716,8 @@ def modifications_install():
             print("Please, choose the command to execute (number): ")
             print("1 - Install Magisk")
             print("2 - Install Pixel Launcher")
-            print("3 - Install Google Camera")
-            print("4 - Install Titanium Backup")
+            # print("3 - Install Google Camera")
+            # print("4 - Install Titanium Backup")
             print("5 - Flash Bootanimation from Pixel")
             print("0 - Go back to categories")
             print("".join("-" for i in range(80)))
