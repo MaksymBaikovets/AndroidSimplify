@@ -60,12 +60,12 @@ def adb_devices():
     return "Completed!"
  
 def reboot_bootloader():
-    subprocess.run([adb_path, "reboot bootloader"], 
+    subprocess.run([adb_path, "reboot", "bootloader"], 
         capture_output = False)
     return "Completed!"
 
 def reboot_recovery():
-    subprocess.run([adb_path, "reboot recovery"], 
+    subprocess.run([adb_path, "reboot", "recovery"], 
         capture_output = False)
     return "Completed!"
 
@@ -90,7 +90,7 @@ def operation_select_1block(argument):
 # -------------------- 2nd block of cmds --------------------
 
 def fw_version():
-    subprocess.run([adb_path, "shell", "getprop gsm.version.baseband"], 
+    subprocess.run([adb_path, "shell", "getprop",  "gsm.version.baseband"], 
         capture_output = False)
     return "Completed!"
 
@@ -105,7 +105,7 @@ def flash_recovery():
     
     elif keycode == 13:  
         
-        subprocess.run([adb_path, "reboot bootloader"], 
+        subprocess.run([adb_path, "reboot", "bootloader"], 
             capture_output = True)
         
         subprocess.run([fastboot_path, "flash", "recovery", 
@@ -133,18 +133,18 @@ def flash_firmware():
     
     elif keycode == 13:  
         
-        subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
             capture_output = True)
 
         subprocess.run([adb_path, "push", getcwd() + 
             "\\files\\fw\\firmware.zip", "/sdcard/temp"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "twrp install", 
+        subprocess.run([adb_path, "shell", "twrp", "install", 
             "/sdcard/temp/firmware.zip"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
             capture_output = True)
 
         return "OK!"
@@ -182,10 +182,10 @@ def wipe_cache():
         return "Going back..."
     
     elif keycode == 13:  
-        subprocess.run([adb_path, "shell", "twrp wipe cache"], 
+        subprocess.run([adb_path, "shell", "twrp", "wipe", "cache"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "twrp wipe dalvik"], 
+        subprocess.run([adb_path, "shell", "twrp", "wipe", "dalvik"], 
             capture_output = True)
 
         return "OK!"
@@ -213,7 +213,7 @@ def wipe_system():
 
         elif keycode == 121:  
             
-            subprocess.run([adb_path, "shell", "twrp wipe system"], 
+            subprocess.run([adb_path, "shell", "twrp", "wipe", "system"], 
                 capture_output = True)
 
             return "OK!"
@@ -247,7 +247,7 @@ def flash_system():
             return "Cancelled..."
 
         elif keycode == 121:  
-            subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
+            subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
                 capture_output = True)
 
             # subprocess.run([adb_path, "push", \
@@ -258,7 +258,7 @@ def flash_system():
             #     "twrp install /sdcard/temp/firmware.zip"], \
             #     capture_output = True)
 
-            subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+            subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
                 capture_output = True)
 
             return "OK!"
@@ -293,7 +293,7 @@ def flash_gapps():
     
     elif keycode == 13:  
 
-        subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
             capture_output = True)
         
         try:
@@ -314,10 +314,10 @@ def flash_gapps():
                     capture_output = True)
 
                 subprocess.run([adb_path, "shell",
-                    "twrp install /sdcard/temp/arm64-8.1.zip"],
+                    "twrp", "install", "/sdcard/temp/arm64-8.1.zip"],
                     capture_output = True)
 
-                subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+                subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
                     capture_output = True)
                 
                 return "OK!"
@@ -325,14 +325,14 @@ def flash_gapps():
             elif user_input == 2:
 
                 subprocess.run([adb_path, "push",
-                    getcwd()+"\\files\\gapps\\arm64-9.0.zip", "/sdcard/temp"], 
+                    getcwd() + "\\files\\gapps\\arm64-9.0.zip", "/sdcard/temp"], 
                     capture_output = True)
 
                 subprocess.run([adb_path, "shell",
-                    "twrp install /sdcard/temp/arm64-9.0.zip"],
+                    "twrp", "install", "/sdcard/temp/arm64-9.0.zip"],
                     capture_output = True)
                 
-                subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+                subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
                     capture_output = True)
                 
                 return "OK!"
@@ -389,18 +389,18 @@ def magisk_install():
         with open('./files/addons/magisk.zip', 'wb') as f:  
             f.write(file.content)
 
-        subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
             capture_output = True)
 
         subprocess.run([adb_path, "push", getcwd() 
             + "\\files\\addons\\magisk.zip", "/sdcard/temp"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "twrp install",
+        subprocess.run([adb_path, "shell", "twrp", "install",
             "/sdcard/temp/magisk.zip"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
             capture_output = True)
 
         return "OK!"
