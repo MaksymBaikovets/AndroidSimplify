@@ -141,7 +141,7 @@ def flash_firmware():
             "/sdcard/temp/firmware.zip"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
             capture_output = True)
 
         return "OK!"
@@ -293,7 +293,7 @@ def flash_system():
             #     "twrp install /sdcard/temp/firmware.zip"], \
             #     capture_output = True)
 
-            subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+            subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
                 capture_output = True)
 
             return "OK!"
@@ -350,7 +350,7 @@ def flash_gapps():
                     "twrp", "install", "/sdcard/temp/arm64-8.1.zip"],
                     capture_output = True)
 
-                subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+                subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
                     capture_output = True)
                 
                 return "OK!"
@@ -365,7 +365,7 @@ def flash_gapps():
                     "twrp", "install", "/sdcard/temp/arm64-9.0.zip"],
                     capture_output = True)
                 
-                subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+                subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
                     capture_output = True)
                 
                 return "OK!"
@@ -432,7 +432,7 @@ def magisk_install():
             "/sdcard/temp/magisk.zip"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
             capture_output = True)
 
         return "OK!"
@@ -452,7 +452,7 @@ def launcher_install():
     elif keycode == 13:  
         
         # Need to add dynamic load of archives
-        
+
         # url = (
         #     "https://github.com/topjohnwu/Magisk/releases"
         #     "/download/v18.1/Magisk-v18.1.zip"""
@@ -483,7 +483,7 @@ def launcher_install():
             "/sdcard/temp/launcher.zip"], 
             capture_output = True)
 
-        subprocess.run([adb_path, "shell", "rm", "-f", "/sdcard/temp"], 
+        subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
             capture_output = True)
 
         return "OK!"
@@ -493,17 +493,111 @@ def launcher_install():
         return "Going back..."   
 
 def gcam_install():
-    pass  
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        
+        # adb remount
+        # adb push ADWLauncher.apk /system/app
+        # adb shell chmod 644 /system/app/ADWLauncher.apk
+
+        subprocess.run([adb_path, "push", getcwd() 
+            + "\\files\\addons\\camera.apk", "/system/app"], 
+            capture_output = True)
+        
+        subprocess.run([adb_path, "shell", "chmod", "644",
+            "/system/app/camera.apk"], 
+            capture_output = True)
+
+        return "OK!"
+
+    else:
+        print("Incorrect value!")
+        return "Going back..."   
+
+def titanium_install():
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        
+        # adb remount
+        # adb push ADWLauncher.apk /system/app
+        # adb shell chmod 644 /system/app/ADWLauncher.apk
+
+        subprocess.run([adb_path, "push", getcwd() 
+            + "\\files\\addons\\titanium.apk", "/system/app"], 
+            capture_output = True)
+        
+        subprocess.run([adb_path, "shell", "chmod", "644",
+            "/system/app/titanium.apk"], 
+            capture_output = True)
+
+        return "OK!"
+
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 def bootanimation_install():
-    pass 
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+
+        # Need to add dynamic load of archive
+
+        # url = (
+        #     "https://github.com/topjohnwu/Magisk/releases"
+        #     "/download/v18.1/Magisk-v18.1.zip"""
+        # )
+
+        # r = requests.get(url)
+        # file = requests.get(r.url)
+
+        # with open('./files/addons/magisk.zip', 'wb') as f:  
+        #     f.write(file.content)
+
+        subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "push", getcwd() 
+            + "\\files\\addons\\bootanimation.zip", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "twrp", "install",
+            "/sdcard/temp/bootanimation.zip"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
+            capture_output = True)
+
+        return "OK!"
+
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 cmd_switcher_4block = {
     # 0: go_back,
     1: magisk_install,
-    2: launcher_install
-    # 3: gcam_install,
-    # 4: bootanimation_install
+    2: launcher_install,
+    3: gcam_install,
+    4: titanium_install,
+    5: bootanimation_install
 }
 
 def operation_select_4block(argument):
@@ -618,9 +712,9 @@ def modifications_install():
             print("Please, choose the command to execute (number): ")
             print("1 - Install Magisk")
             print("2 - Install Pixel Launcher")
-            # print("3 - Install Google Camera")
-            # print("4 - Flash Bootanimation from Pixel")
-            # print("5 - Install Titanium Backup")
+            print("3 - Install Google Camera")
+            print("4 - Install Titanium Backup")
+            print("5 - Flash Bootanimation from Pixel")
             print("0 - Go back to categories")
             print("".join("-" for i in range(80)))
 
