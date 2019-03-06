@@ -14,6 +14,9 @@ program_owner = "* This program was written by Maksym Baikovets."
 disclimer = "* All you done here are under your responsibility."
 final_words = "* So, don't blame me if something went wrong. Thanks for using!"
 
+adb_path = ".\\platform-tools-windows\\adb"
+fastboot_path = ".\\platform-tools-windows\\fastboot"
+
 # -------------------- clear the screen --------------------
 
 def clear():
@@ -52,23 +55,19 @@ def exit_program():
 # -------------------- 1st block of cmds --------------------
 
 def adb_devices():
-    subprocess.run([".\\platform-tools-windows\\adb", "devices", \
-        "-l"], capture_output = False)
+    subprocess.run([adb_path, "devices", "-l"], capture_output = False)
     return "Completed!"
  
 def reboot_bootloader():
-    subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
-        "bootloader"], capture_output = False)
+    subprocess.run([adb_path, "reboot bootloader"], capture_output = False)
     return "Completed!"
 
 def reboot_recovery():
-    subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
-        "recovery"], capture_output = False)
+    subprocess.run([adb_path, "reboot recovery"], capture_output = False)
     return "Completed!"
 
 def soft_reboot():
-    subprocess.run([".\\platform-tools-windows\\adb", "reboot"], \
-        capture_output = False)
+    subprocess.run([adb_path, "reboot"], capture_output = False)
     return "Completed!"
 
 cmd_switcher_1block = {
@@ -87,7 +86,7 @@ def operation_select_1block(argument):
 # -------------------- 2nd block of cmds --------------------
 
 def fw_version():
-    subprocess.run(["./platform-tools-windows/adb", "shell", \
+    subprocess.run([adb_path, "shell", 
         "getprop gsm.version.baseband"], capture_output = False)
     return "Completed!"
 
@@ -102,15 +101,12 @@ def flash_recovery():
     
     elif keycode == 13:  
         
-        subprocess.run([".\\platform-tools-windows\\adb", "reboot", \
-            "bootloader"], capture_output = True)
+        subprocess.run([adb_path, "reboot bootloader"], capture_output = True)
         
-        subprocess.run([".\\platform-tools-windows\\fastboot", "flash", \
-            "recovery", ".\\files\\twrp\\twrp.img"], \
-            capture_output = True)
+        subprocess.run([fastboot_path, "flash", "recovery", 
+            ".\\files\\twrp\\twrp.img"], capture_output = True)
 
-        subprocess.run([".\\platform-tools-windows\\fastboot", "reboot"], \
-            capture_output = True)
+        subprocess.run([fastboot_path, "reboot"], capture_output = True)
 
         return "OK!"
 
@@ -130,19 +126,19 @@ def flash_firmware():
     
     elif keycode == 13:  
         
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "mkdir /sdcard/temp"], capture_output = True)
-
-        subprocess.run([".\\platform-tools-windows\\adb", "push", \
-            getcwd()+"\\files\\fw\\firmware.zip", \
-            "/sdcard/temp"], capture_output = True)
-
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "twrp install /sdcard/temp/firmware.zip"], \
+        subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
             capture_output = True)
 
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "rm -f /sdcard/temp"], capture_output = True)
+        subprocess.run([adb_path, "push", getcwd() + 
+            "\\files\\fw\\firmware.zip", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "twrp install", 
+            "/sdcard/temp/firmware.zip"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+            capture_output = True)
 
         return "OK!"
         
@@ -179,11 +175,11 @@ def wipe_cache():
         return "Going back..."
     
     elif keycode == 13:  
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "twrp wipe cache"], capture_output = True)
+        subprocess.run([adb_path, "shell", "twrp wipe cache"], 
+            capture_output = True)
 
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "twrp wipe dalvik"], capture_output = True)
+        subprocess.run([adb_path, "shell", "twrp wipe dalvik"], 
+            capture_output = True)
 
         return "OK!"
     
@@ -210,8 +206,8 @@ def wipe_system():
 
         elif keycode == 121:  
             
-            subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                "twrp wipe system"], capture_output = True)
+            subprocess.run([adb_path, "shell", "twrp wipe system"], 
+                capture_output = True)
 
             return "OK!"
         
@@ -244,19 +240,19 @@ def flash_system():
             return "Cancelled..."
 
         elif keycode == 121:  
-            subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                "mkdir /sdcard/temp"], capture_output = True)
+            subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
+                capture_output = True)
 
-            # subprocess.run([".\\platform-tools-windows\\adb", "push", \
+            # subprocess.run([adb_path, "push", \
             #     getcwd()+"\\files\\fw\\firmware.zip", \
             #     "/sdcard/temp"], capture_output = True)
 
-            # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+            # subprocess.run([adb_path, "shell", \
             #     "twrp install /sdcard/temp/firmware.zip"], \
             #     capture_output = True)
 
-            subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                "rm -f /sdcard/temp"], capture_output = True)
+            subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+                capture_output = True)
 
             return "OK!"
         
@@ -270,10 +266,10 @@ def flash_system():
 
 def restore_system():
     
-    # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+    # subprocess.run([adb_path, "shell", \
     #     r"ls -l /sdcard/TWRP/.BACKUPS/*/"], capture_output = False)
 
-    # subprocess.run([".\\platform-tools-windows\\adb", "shell", \
+    # subprocess.run([adb_path, "shell", \
     #     "twrp restore <foldername> <switches>"], capture_output = True)
 
     pass
@@ -290,8 +286,8 @@ def flash_gapps():
     
     elif keycode == 13:  
 
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "mkdir /sdcard/temp"], capture_output = True)
+        subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
+            capture_output = True)
         
         try:
             print("Choose the version of your ROM:")
@@ -306,31 +302,31 @@ def flash_gapps():
 
             elif user_input == 1:
 
-                subprocess.run([".\\platform-tools-windows\\adb", "push", \
-                    getcwd()+"\\files\\gapps\\arm64-8.1.zip", \
-                    "/sdcard/temp"], capture_output = True)
-
-                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                    "twrp install /sdcard/temp/arm64-8.1.zip"], \
+                subprocess.run([adb_path, "push",
+                    getcwd()+"\\files\\gapps\\arm64-8.1.zip", "/sdcard/temp"], 
                     capture_output = True)
 
-                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                    "rm -f /sdcard/temp"], capture_output = True)
+                subprocess.run([adb_path, "shell",
+                    "twrp install /sdcard/temp/arm64-8.1.zip"],
+                    capture_output = True)
+
+                subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+                    capture_output = True)
                 
                 return "OK!"
 
             elif user_input == 2:
 
-                subprocess.run([".\\platform-tools-windows\\adb", "push", \
-                    getcwd()+"\\files\\gapps\\arm64-9.0.zip", \
-                    "/sdcard/temp"], capture_output = True)
+                subprocess.run([adb_path, "push",
+                    getcwd()+"\\files\\gapps\\arm64-9.0.zip", "/sdcard/temp"], 
+                    capture_output = True)
 
-                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                    "twrp install /sdcard/temp/arm64-9.0.zip"], \
+                subprocess.run([adb_path, "shell",
+                    "twrp install /sdcard/temp/arm64-9.0.zip"],
                     capture_output = True)
                 
-                subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-                    "rm -f /sdcard/temp"], capture_output = True)
+                subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+                    capture_output = True)
                 
                 return "OK!"
                          
@@ -386,19 +382,19 @@ def magisk_install():
         with open('./files/addons/magisk.zip', 'wb') as f:  
             f.write(file.content)
 
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "mkdir /sdcard/temp"], capture_output = True)
-
-        subprocess.run([".\\platform-tools-windows\\adb", "push", \
-            getcwd()+"\\files\\addons\\magisk.zip", \
-            "/sdcard/temp"], capture_output = True)
-
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "twrp install /sdcard/temp/magisk.zip"], \
+        subprocess.run([adb_path, "shell", "mkdir /sdcard/temp"], 
             capture_output = True)
 
-        subprocess.run([".\\platform-tools-windows\\adb", "shell", \
-            "rm -f /sdcard/temp"], capture_output = True)
+        subprocess.run([adb_path, "push", getcwd() 
+            + "\\files\\addons\\magisk.zip", "/sdcard/temp"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "twrp install",
+            "/sdcard/temp/magisk.zip"], 
+            capture_output = True)
+
+        subprocess.run([adb_path, "shell", "rm -f /sdcard/temp"], 
+            capture_output = True)
 
         return "OK!"
 
@@ -586,10 +582,10 @@ def main_loop():
 
             print("Please, choose the category of CMDs (number): ")
             print("1 - Basics (adb devices, rebooting)")
-            print("2 - Working with recovery & FW (fastboot, fw version,", \
+            print("2 - Working with recovery & FW (fastboot, fw version,",
                 "update recovery / fw)")
             print("3 - Flashing ROM to device (flash ROM and GAPPs if needed)")
-            print("4 - Install modifications (such as Magisk, launchers,", \
+            print("4 - Install modifications (such as Magisk, launchers,",
                 "icons, etc.)")
             print("0 - Exit program")
             print("".join("-" for i in range(80)))
