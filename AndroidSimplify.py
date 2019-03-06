@@ -14,9 +14,6 @@ program_owner = "* This program was written by Maksym Baikovets."
 disclimer = "* All you done here are under your responsibility."
 final_words = "* So, don't blame me if something went wrong. Thanks for using!"
 
-adb_path = ".\\platform-tools-windows\\adb"
-fastboot_path = ".\\platform-tools-windows\\fastboot"
-
 # -------------------- clear the screen --------------------
 
 def clear():
@@ -41,10 +38,10 @@ def decore(func):
             pass
     return run
 
-# -------------------- return to categories --------------------
+# -------------------- android tools pathes --------------------
 
-# def go_back():
-#     return "You'll be turned back to main menu."
+adb_path = ".\\platform-tools-windows\\adb"
+fastboot_path = ".\\platform-tools-windows\\fastboot"
 
 # -------------------- quit the main loop --------------------
 
@@ -154,14 +151,58 @@ def flash_firmware():
         return "Going back..."    
 
 def flash_persist():
-    pass 
+    print("To perform this action you should be in the recovery!")
+    print("Press 'Enter' to continue or press 'Esc' to abort operation.")
+    
+    keycode = ord(msvcrt.getch())
+
+    if keycode == 27:
+        return "Going back..."
+    
+    elif keycode == 13:  
+        print("This operation restores persist partition.")
+        print("Choose targeted device to start restore:")
+        print("1 - Mi Pad 4 Plus (backup from LTE / 128 gB version)")
+        # print("2 - Mi Pad 4 (backup from ... / ... gB version)")
+        print("Choose targeted device to start restore:")
+
+        keycode = ord(msvcrt.getch())
+        # need to perform backup from the regular Mi Pad 4 to add there
+        # if keycode == 49 | 50:
+        if keycode == 49:
+            
+            subprocess.run([adb_path, "reboot", "bootloader"], 
+                capture_output = True)
+
+            if keycode == 49:  
+                subprocess.run([fastboot_path, "flash", "persist", 
+                    ".\\files\\persist\\mipad4plus_persist.img"], 
+                    capture_output = True)
+
+            elif keycode == 50:  
+                subprocess.run([fastboot_path, "flash", "persist", 
+                    ".\\files\\persist\\mipad4_persist.img"], 
+                    capture_output = True)
+
+            subprocess.run([fastboot_path, "reboot"], 
+                capture_output = True)
+
+            return "OK!"
+        
+        else:
+            print("Incorrect value!")
+            return "Cancelled..." 
+
+    else:
+        print("Incorrect value!")
+        return "Going back..." 
 
 cmd_switcher_2block = {
     # 0: go_back,
     1: fw_version,
     2: flash_recovery,
     3: flash_firmware,
-    # 4: flash_persist
+    4: flash_persist
 }
 
 def operation_select_2block(argument):
@@ -474,7 +515,7 @@ def recovery_firmware():
             print("1 - Show FW version")
             print("2 - Flash recovery (TWRP)")
             print("3 - Flash FW")
-            # print("4 - Restore Persist")
+            print("4 - Restore Persist")
             print("0 - Go back to categories")
             print("".join("-" for i in range(80)))
 
