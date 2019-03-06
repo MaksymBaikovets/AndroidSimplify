@@ -786,6 +786,25 @@ def main_loop():
 # -------------------- launch main loop --------------------
 
 def main():
+    
+    subprocess.run(["mkdir", "./files/"], 
+        capture_output = True)
+
+    subprocess.run(["mkdir", "./files/addons"], 
+        capture_output = True)
+
+    subprocess.run(["mkdir", "./files/fw"], 
+        capture_output = True)
+
+    subprocess.run(["mkdir", "./files/twrp"], 
+        capture_output = True)
+
+    subprocess.run(["mkdir", "./files/gapps"], 
+        capture_output = True)
+
+    subprocess.run(["mkdir", "./files/persist"], 
+        capture_output = True)
+
     while True:
         main_loop()
 
