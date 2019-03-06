@@ -1,4 +1,6 @@
-#import platform
+# Not needed if there won't be a multiplatform support
+# import platform
+
 import time
 import subprocess
 import sys
@@ -94,7 +96,6 @@ def fw_version():
 def flash_recovery():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    # user_choice = input()
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -122,7 +123,6 @@ def flash_recovery():
 def flash_firmware():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    # user_choice = input()
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -153,7 +153,6 @@ def flash_firmware():
 def flash_persist():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -165,9 +164,8 @@ def flash_persist():
         print("1 - Mi Pad 4 Plus (backup from LTE / 128 gB version)")
         # print("2 - Mi Pad 4 (backup from ... / ... gB version)")
         print("Choose targeted device to start restore:")
-
         keycode = ord(msvcrt.getch())
-        # need to perform backup from the regular Mi Pad 4 to add there
+        # Need to perform backup from the regular Mi Pad 4 to add there
         # if keycode == 49 | 50:
         if keycode == 49:
             
@@ -216,7 +214,6 @@ def operation_select_2block(argument):
 def wipe_cache():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -236,10 +233,8 @@ def wipe_cache():
         return "Going back..." 
 
 def wipe_system():
-
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -270,7 +265,6 @@ def wipe_system():
 def flash_system():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -323,10 +317,8 @@ def restore_system():
     pass
 
 def flash_gapps():
-
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
@@ -411,7 +403,6 @@ def operation_select_3block(argument):
 def magisk_install():
     print("To perform this action you should be in the recovery!")
     print("Press 'Enter' to continue or press 'Esc' to abort operation.")
-    
     keycode = ord(msvcrt.getch())
 
     if keycode == 27:
