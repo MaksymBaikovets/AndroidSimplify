@@ -10,7 +10,7 @@ So, don't blame me if something went wrong. Thanks for using!
 
 1. Launch the program.
 1. Copy the files into the ./files/ directories:  
-<https://drive.google.com/open?id=1H86mtVSJ7oqhX9t7j2IVM1DRxnKF2Yie>
+<https://drive.google.com/open?id=1Nz3SADXGZwPF098sDI5CGxLOYZ8MOHR4>
 
 * ./files/addons - chenge at your own risk!  
   Contain: camera.apk, titanium.apk, magisk.zip  
