@@ -12,7 +12,7 @@ So, don't blame me if something went wrong. Thanks for using!
 1. Copy the files into the ./files/ directories:  
 
 * ./files/addons - chenge at your own risk!  
-  Contain: camera.apk, titanium.apk,  
+  Contain: camera.apk, titanium.apk, magisk.zip  
   launcher.zip, matchmaker.zip, bootanimation.zip
 * ./files/fw - place there fw.zip and rom.zip  
   This archives updates yours fw and install ROM (respectively).  
