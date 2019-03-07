@@ -1,5 +1,9 @@
 # AndroidSimplify
 
+Targeted device - clover (Mi Pad 4).  
+Possible to use with any device (in theory). In investigation.  
+Pay attention, that script is still in development,  use releases if needed.
+
 ## Disclimer
 
 This program was written by Maksym Baikovets.  
