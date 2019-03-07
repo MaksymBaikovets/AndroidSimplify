@@ -16,9 +16,9 @@ So, don't blame me if something went wrong. Thanks for using!
 1. Copy the files into the ./files/ directories (archive for 'clover'):  
 <https://drive.google.com/open?id=1w8BEstlrzQdd2EbUWyqdFkBSYQzwkNwQ>
 
-* ./files/twrp - chenge at your own risk!  
+* ./files/twrp - change at your own risk!  
   Contain: twrp.img
-* ./files/addons - chenge at your own risk!  
+* ./files/addons - change at your own risk!  
   Contain: camera.apk, titanium.apk, magisk.zip  
   launcher.zip, matchmaker.zip, bootanimation.zip
 * ./files/fw - place there fw.zip and rom.zip  
@@ -26,7 +26,7 @@ So, don't blame me if something went wrong. Thanks for using!
   Please, do not use ROM-s / firmware from other devices!  
 * ./files/gapps - place there arm64-8.1.zip and arm64-9.0.zip  
   Install gapps to your system (you will be able to choose which gapps you need)
-* ./files/persist - chenge at your own risk!  
+* ./files/persist - change at your own risk!  
   Contain: mipad4plus_persist.img (+ mipad4_persist.img)  
   For now there is no .img for regular Mi Pad 4 (you can help to get it!)
 
