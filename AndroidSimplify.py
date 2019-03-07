@@ -285,13 +285,13 @@ def flash_system():
             subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"], 
                 capture_output = True)
 
-            # subprocess.run([adb_path, "push", \
-            #     getcwd()+"\\files\\fw\\firmware.zip", \
-            #     "/sdcard/temp"], capture_output = True)
+            subprocess.run([adb_path, "push", \
+                getcwd()+"\\files\\fw\\rom.zip", \
+                "/sdcard/temp"], capture_output = True)
 
-            # subprocess.run([adb_path, "shell", \
-            #     "twrp install /sdcard/temp/firmware.zip"], \
-            #     capture_output = True)
+            subprocess.run([adb_path, "shell", \
+                "twrp install /sdcard/temp/rom.zip"], \
+                capture_output = True)
 
             subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"], 
                 capture_output = True)
@@ -308,8 +308,11 @@ def flash_system():
 
 def restore_system():
     
-    # subprocess.run([adb_path, "shell", \
-    #     r"ls -l /sdcard/TWRP/.BACKUPS/*/"], capture_output = False)
+    # cmd = subprocess.run([adb_path, "shell", \
+    #     r"ls -l /sdcard/TWRP/.BACKUPS/*/"], capture_output = True)
+
+    # 
+    # 
 
     # subprocess.run([adb_path, "shell", \
     #     "twrp restore <foldername> <switches>"], capture_output = True)
@@ -388,7 +391,7 @@ cmd_switcher_3block = {
     # 0: go_back,
     1: wipe_cache,
     2: wipe_system,
-    # 3: flash_system,
+    3: flash_system,
     # 4: restore_system,
     5: flash_gapps
 }
@@ -695,7 +698,7 @@ def flashing_rom():
             print("Please, choose the command to execute (number): ")
             print("1 - Wipe Dalvik & Cache")
             print("2 - Wipe System")
-            # print("3 - Flash new ROM")
+            print("3 - Flash new ROM")
             # print("4 - Restore ROM from the backup")
             print("5 - Flash GAPPs")
             print("0 - Go back to categories")
