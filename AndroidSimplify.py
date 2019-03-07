@@ -311,8 +311,8 @@ def restore_system():
     # cmd = subprocess.run([adb_path, "shell", \
     #     r"ls -l /sdcard/TWRP/.BACKUPS/*/"], capture_output = True)
 
-    # 
-    # 
+    # Need to define, in what the way user should select restore point folder
+    # Investigate needs and possibilities
 
     # subprocess.run([adb_path, "shell", \
     #     "twrp restore <foldername> <switches>"], capture_output = True)
