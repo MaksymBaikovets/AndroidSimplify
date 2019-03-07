@@ -74,7 +74,6 @@ def soft_reboot():
     return "Completed!"
 
 cmd_switcher_1block = {
-    # 0: go_back,
     1: adb_devices,
     2: reboot_bootloader,
     3: reboot_recovery,
@@ -196,7 +195,6 @@ def flash_persist():
         return "Going back..." 
 
 cmd_switcher_2block = {
-    # 0: go_back,
     1: fw_version,
     2: flash_recovery,
     3: flash_firmware,
@@ -209,7 +207,6 @@ def operation_select_2block(argument):
     return func()
 
 # -------------------- 3rd block of cmds --------------------
-# https://www.pocketables.com/2014/10/using-twrps-new-adb-interface.html
 
 def wipe_cache():
     print("To perform this action you should be in the recovery!")
@@ -388,7 +385,6 @@ def flash_gapps():
         return "Going back..." 
 
 cmd_switcher_3block = {
-    # 0: go_back,
     1: wipe_cache,
     2: wipe_system,
     3: flash_system,
@@ -504,13 +500,7 @@ def gcam_install():
         return "Going back..."
     
     elif keycode == 13:  
-        
-        # adb shell su
-        # mount -o rw,remount /system
-        # adb push ADWLauncher.apk /system/app
-        # adb shell chmod 644 /system/app/ADWLauncher.apk
-        # mount -o ro,remount /system
-        
+              
         subprocess.run([adb_path, "shell", "twrp", "mount", "system"], 
             capture_output = True)
 
@@ -540,12 +530,6 @@ def titanium_install():
         return "Going back..."
     
     elif keycode == 13:  
-        
-        # adb shell su
-        # mount -o rw,remount /system
-        # adb push ADWLauncher.apk /system/app
-        # adb shell chmod 644 /system/app/ADWLauncher.apk
-        # mount -o ro,remount /system
 
         subprocess.run([adb_path, "shell", "twrp", "mount", "system"], 
             capture_output = True)
@@ -611,7 +595,6 @@ def bootanimation_install():
         return "Going back..." 
 
 cmd_switcher_4block = {
-    # 0: go_back,
     1: magisk_install,
     2: launcher_install,
     3: gcam_install,
