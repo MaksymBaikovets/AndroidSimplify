@@ -4,3 +4,4 @@ __pycache__/
 # Ignoring files folder (should be created by the script itself)
 files/
 files \(backup)/
+files.zip
