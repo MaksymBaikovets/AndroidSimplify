@@ -2,9 +2,9 @@
 
 ## Disclimer
 
-This program was written by Maksym Baikovets."
-All you done here are under your responsibility."
-So, don't blame me if something went wrong. Thanks for using!"
+This program was written by Maksym Baikovets.  
+All you done here are under your responsibility.  
+So, don't blame me if something went wrong. Thanks for using!  
 
 ## Instructions
 
