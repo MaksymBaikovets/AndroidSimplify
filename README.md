@@ -9,7 +9,7 @@ So, don't blame me if something went wrong. Thanks for using!
 ## Instructions
 
 1. Launch the program.
-1. Copy the files into the ./files/ directories:  
+1. Copy the files into the ./files/ directories (archive for 'clover'):  
 <https://drive.google.com/open?id=1Nz3SADXGZwPF098sDI5CGxLOYZ8MOHR4>
 
 * ./files/addons - chenge at your own risk!  
