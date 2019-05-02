@@ -1,14 +1,12 @@
-# Not needed if there won't be a multiplatform support
-# import platform
+# -------------------- import modules --------------------
 
 import time
 import subprocess
 import sys
 import msvcrt
 import requests
+import os
 
-from os import system
-from os import getcwd
 
 # -------------------- predefined program title --------------------
 
@@ -20,7 +18,7 @@ final_words = "* So, don't blame me if something went wrong. Thanks for using!"
 # -------------------- clear the screen --------------------
 
 def clear():
-    system("cls")
+    os.system("cls")
 
 
 # -------------------- decorator (title and screen clear) --------------------
@@ -145,7 +143,7 @@ def flash_firmware():
         subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"],
                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd() +
+        subprocess.run([adb_path, "push", os.getcwd() +
                         "\\files\\fw\\firmware.zip", "/sdcard/temp"],
                        capture_output=True)
 
@@ -302,7 +300,7 @@ def flash_system():
                            capture_output=True)
 
             subprocess.run([adb_path, "push",
-                            getcwd() + "\\files\\fw\\rom.zip",
+                            os.getcwd() + "\\files\\fw\\rom.zip",
                             "/sdcard/temp"], capture_output=True)
 
             subprocess.run([adb_path, "shell", \
@@ -363,7 +361,7 @@ def flash_gapps():
             elif user_input == 1:
 
                 subprocess.run([adb_path, "push",
-                                getcwd() + "\\files\\gapps\\arm64-8.1.zip", "/sdcard/temp"],
+                                os.getcwd() + "\\files\\gapps\\arm64-8.1.zip", "/sdcard/temp"],
                                capture_output=True)
 
                 subprocess.run([adb_path, "shell",
@@ -378,8 +376,8 @@ def flash_gapps():
             elif user_input == 2:
 
                 subprocess.run([adb_path, "push",
-                                getcwd() + "\\files\\gapps\\arm64-9.0.zip", "/sdcard/temp"],
-                               capture_output=True)
+                                os.getcwd() + "\\files\\gapps\\arm64-9.0.zip", "/sdcard/temp"],
+                                capture_output=True)
 
                 subprocess.run([adb_path, "shell",
                                 "twrp", "install", "/sdcard/temp/arm64-9.0.zip"],
@@ -446,7 +444,7 @@ def magisk_install():
         subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"],
                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd()
+        subprocess.run([adb_path, "push", os.getcwd()
                         + "\\files\\addons\\magisk.zip", "/sdcard/temp"],
                        capture_output=True)
 
@@ -488,15 +486,15 @@ def launcher_install():
         #     f.write(file.content)
 
         subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd()
+        subprocess.run([adb_path, "push", os.getcwd()
                         + "\\files\\addons\\launcher.zip", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd()
+        subprocess.run([adb_path, "push", os.getcwd()
                         + "\\files\\addons\\matchmaker.zip", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "twrp", "install",
                         "/sdcard/temp/matchmaker.zip"],
@@ -504,10 +502,10 @@ def launcher_install():
 
         subprocess.run([adb_path, "shell", "twrp", "install",
                         "/sdcard/temp/launcher.zip"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
         return "OK!"
 
@@ -527,18 +525,18 @@ def gcam_install():
     elif keycode == 13:
 
         subprocess.run([adb_path, "shell", "twrp", "mount", "system"],
-                       capture_output=True)
+                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd()
+        subprocess.run([adb_path, "push", os.getcwd()
                         + "\\files\\addons\\camera.apk", "/system/app/"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "chmod", "644",
                         "/system/app/camera.apk"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "twrp", "umount", "system"],
-                       capture_output=True)
+                        capture_output=True)
 
         return "OK!"
 
@@ -558,18 +556,18 @@ def titanium_install():
     elif keycode == 13:
 
         subprocess.run([adb_path, "shell", "twrp", "mount", "system"],
-                       capture_output=True)
+                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd()
+        subprocess.run([adb_path, "push", os.getcwd()
                         + "\\files\\addons\\titanium.apk", "/system/app/"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "chmod", "644",
                         "/system/app/titanium.apk"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "twrp", "umount", "system"],
-                       capture_output=True)
+                        capture_output=True)
 
         return "OK!"
 
@@ -602,18 +600,18 @@ def bootanimation_install():
         #     f.write(file.content)
 
         subprocess.run([adb_path, "shell", "mkdir", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
-        subprocess.run([adb_path, "push", getcwd()
+        subprocess.run([adb_path, "push", os.getcwd()
                         + "\\files\\addons\\bootanimation.zip", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "twrp", "install",
                         "/sdcard/temp/bootanimation.zip"],
-                       capture_output=True)
+                        capture_output=True)
 
         subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"],
-                       capture_output=True)
+                        capture_output=True)
 
         return "OK!"
 
@@ -824,28 +822,12 @@ def main_loop():
 # -------------------- launch main loop --------------------
 
 def main():
-    # subprocess.run(["mkdir", "./files/"],
-    #     capture_output = True)
-    # input()
-
-    # subprocess.run(["mkdir", "./files/addons"], 
-    #     capture_output = True)
-
-    # subprocess.run(["mkdir", "./files/fw"], 
-    #     capture_output = True)
-
-    # subprocess.run(["mkdir", "./files/twrp"], 
-    #     capture_output = True)
-
-    # subprocess.run(["mkdir", "./files/gapps"], 
-    #     capture_output = True)
-
-    # subprocess.run(["mkdir", "./files/persist"], 
-    #     capture_output = True)
+    folders_names = ['addons', 'fw', 'gapps', 'persist']
+    for folders in folders_names:
+        os.makedirs(os.path.join('C:\\src\\AndroidSimplify\\files\\', folders))
 
     while True:
         main_loop()
-
 
 # -------------------- program runner --------------------
 if __name__ == "__main__":
