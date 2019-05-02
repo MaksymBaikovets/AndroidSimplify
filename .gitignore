@@ -1,8 +1,4 @@
-# Ignoring pycache folder
+# Ignoring sys folders
 __pycache__/
-
-# Ignoring files folder (should be created by the script itself)
 files/
-files \(backup)/
-files.zip
 \.vscode
