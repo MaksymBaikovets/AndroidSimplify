@@ -6,6 +6,7 @@ import sys
 import msvcrt
 import requests
 import os
+import zipfile
 
 
 # -------------------- predefined program title --------------------
@@ -44,8 +45,8 @@ def decore(func):
 
 # -------------------- android tools pathes --------------------
 
-adb_path = ".\\platform-tools-windows\\adb"
-fastboot_path = ".\\platform-tools-windows\\fastboot"
+adb_path = ".\\platform-tools\\adb"
+fastboot_path = ".\\platform-tools\\fastboot"
 
 
 # -------------------- quit the main loop --------------------
@@ -432,7 +433,7 @@ def magisk_install():
 
         url = (
             "https://github.com/topjohnwu/Magisk/releases"
-            "/download/v18.1/Magisk-v18.1.zip"""
+            "/download/v18.1/Magisk-v18.1.zip"
         )
 
         r = requests.get(url)
@@ -823,8 +824,37 @@ def main_loop():
 
 def main():
     folders_names = ['addons', 'fw', 'gapps', 'persist']
-    for folders in folders_names:
-        os.makedirs(os.path.join('C:\\src\\AndroidSimplify\\files\\', folders))
+    
+    try:
+        for folders in folders_names:
+            os.makedirs(os.path.join('C:\\src\\AndroidSimplify\\files\\', folders))
+        print('Creating files directories...')
+    except FileExistsError:
+        pass
+
+    try:
+        if os.path.exists(os.getcwd() + '\\platform-tools') == True:
+            pass
+        elif os.path.exists(os.getcwd() + '\\platform-tools') == False:
+            platform_tools_url = (
+                "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
+            )
+
+            r = requests.get(platform_tools_url)
+            file = requests.get(r.url)
+
+            with open(os.getcwd() + '\\platform_tools.zip', 'wb') as cur_folder:
+                cur_folder.write(file.content)
+
+            zip_ref = zipfile.ZipFile(os.getcwd() + '\\platform_tools.zip', 'r')
+            zip_ref.extractall(os.getcwd())
+            zip_ref.close()
+
+            os.remove('platform_tools.zip')
+
+    except:
+        print('Make sure you have platform_tools directory unpacked in working directory.' + 
+        '\n' + 'Continue...')
 
     while True:
         main_loop()
