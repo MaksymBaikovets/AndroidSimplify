@@ -825,12 +825,9 @@ def main_loop():
 def main():
     folders_names = ['addons', 'fw', 'gapps', 'persist']
     
-    try:
-        for folders in folders_names:
-            os.makedirs(os.path.join('C:\\src\\AndroidSimplify\\files\\', folders))
-        print('Creating files directories...')
-    except FileExistsError:
-        pass
+    for folders in folders_names:
+        if os.path.exists(os.getcwd() + '\\files\\' + folders) == False:
+            os.makedirs(os.path.join(os.getcwd() + '\\files', folders))    
 
     try:
         if os.path.exists(os.getcwd() + '\\platform-tools') == True:
@@ -853,8 +850,8 @@ def main():
             os.remove('platform_tools.zip')
 
     except:
-        print('Make sure you have platform_tools directory unpacked in working directory.' + 
-        '\n' + 'Continue...')
+        print('Make sure you have platform_tools directory in current working directory.' + 
+        '\n' + 'Press to continue...' + input())
 
     while True:
         main_loop()
