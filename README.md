@@ -14,7 +14,7 @@ So, don't blame me if something went wrong. Thanks for using!
 
 1. Launch the program.
 1. Copy the files into the ./files/ directories (archive for 'clover'):  
-<https://drive.google.com/open?id=1w8BEstlrzQdd2EbUWyqdFkBSYQzwkNwQ>
+<https://drive.google.com/open?id=17elkmBci1ccBhHN0GKMVCC5moJIaE6Os>
 
 * ./files/twrp - change at your own risk!  
   Contain: twrp.img
@@ -30,8 +30,9 @@ So, don't blame me if something went wrong. Thanks for using!
   Contain: mipad4plus_persist.img (+ mipad4_persist.img)  
   For now there is no .img for regular Mi Pad 4 (you can help to get it!)
 
-All-in-One archive:  
-<https://drive.google.com/open?id=1DqhKKRHmZ-7mLVhbou8p91xKw0d4KqWO>
+~~All-in-One archive:  
+<https://drive.google.com/open?id=1DqhKKRHmZ-7mLVhbou8p91xKw0d4KqWO>~~
+Deprecated archive. Should be removed in feature.
 
 Write me, if you have any questions:  
 <https://t.me/Svan_71>

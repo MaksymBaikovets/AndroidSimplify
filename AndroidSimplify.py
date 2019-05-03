@@ -350,8 +350,8 @@ def flash_gapps():
 
         try:
             print("Choose the version of your ROM:")
-            print("1 - Android 8.x")
-            print("2 - Android 9.x")
+            print("1 - Android 9.x")
+            # print("2 - Android 9.x")
             print("0 - Cancel operation")
 
             user_input = int(input())
@@ -359,22 +359,22 @@ def flash_gapps():
             if user_input == 0:
                 return "Going back..."
 
+            # elif user_input == 1:
+
+            #     subprocess.run([adb_path, "push",
+            #                     os.getcwd() + "\\files\\gapps\\arm64-8.1.zip", "/sdcard/temp"],
+            #                    capture_output=True)
+
+            #     subprocess.run([adb_path, "shell",
+            #                     "twrp", "install", "/sdcard/temp/arm64-8.1.zip"],
+            #                    capture_output=True)
+
+            #     subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"],
+            #                    capture_output=True)
+
+            #     return "OK!"
+
             elif user_input == 1:
-
-                subprocess.run([adb_path, "push",
-                                os.getcwd() + "\\files\\gapps\\arm64-8.1.zip", "/sdcard/temp"],
-                               capture_output=True)
-
-                subprocess.run([adb_path, "shell",
-                                "twrp", "install", "/sdcard/temp/arm64-8.1.zip"],
-                               capture_output=True)
-
-                subprocess.run([adb_path, "shell", "rm", "-rf", "/sdcard/temp"],
-                               capture_output=True)
-
-                return "OK!"
-
-            elif user_input == 2:
 
                 subprocess.run([adb_path, "push",
                                 os.getcwd() + "\\files\\gapps\\arm64-9.0.zip", "/sdcard/temp"],
@@ -823,7 +823,7 @@ def main_loop():
 # -------------------- launch main loop --------------------
 
 def main():
-    folders_names = ['addons', 'fw', 'gapps', 'persist']
+    folders_names = ['addons', 'fw', 'gapps', 'persist', 'twrp']
     
     for folders in folders_names:
         if os.path.exists(os.getcwd() + '\\files\\' + folders) == False:
