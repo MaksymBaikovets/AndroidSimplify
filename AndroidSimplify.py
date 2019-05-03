@@ -833,6 +833,7 @@ def main():
         if os.path.exists(os.getcwd() + '\\platform-tools') == True:
             pass
         elif os.path.exists(os.getcwd() + '\\platform-tools') == False:
+            print('Prepearing platform-tools...')
             platform_tools_url = (
                 "https://dl.google.com/android/repository/platform-tools-latest-windows.zip"
             )
