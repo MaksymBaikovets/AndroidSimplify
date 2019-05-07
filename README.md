@@ -31,7 +31,7 @@ So, don't blame me if something went wrong. Thanks for using!
   For now there is no .img for regular Mi Pad 4 (you can help to get it!)
 
 ~~All-in-One archive:  
-<https://drive.google.com/open?id=1DqhKKRHmZ-7mLVhbou8p91xKw0d4KqWO>~~
+<https://drive.google.com/open?id=1DqhKKRHmZ-7mLVhbou8p91xKw0d4KqWO>~~  
 Deprecated archive. Should be removed in feature.
 
 Write me, if you have any questions:  
